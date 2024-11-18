@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useRef } from "react";
 import Webcam from "react-webcam";
+import Image from "next/image";
 
 export function ButtomLerCodigo() {
   const videoRef = useRef<Webcam>(null);
@@ -78,7 +79,7 @@ export function ButtomLerCodigo() {
 
       {capturedImage && (
         <div className="mt-4">
-          <img src={capturedImage} alt="Captura" />
+          <Image src={capturedImage} alt="Captura" />
           <button
             className="ml-2 bg-red-100 p-2 mt-5 z-10 rounded font-semibold text-base w-24 hover:bg-red-600 hover:text-white active:bg-red-900"
             onClick={resetWebcam}
