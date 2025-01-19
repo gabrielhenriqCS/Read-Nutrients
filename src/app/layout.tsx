@@ -12,7 +12,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-br">
       <body>
-        <NavBar/>
         <main>{children}</main>
       </body>
     </html>
