@@ -22,7 +22,10 @@ export function ConsultarNutrientes() {
         </div>
        {erro && <div className="bg-red-300 p-2 rounded text-red-800 z-10 mt-4">
                 <h1>A requisição não foi bem sucedida.</h1>
-            </div>  }
+            </div>}
+        {codeBar && <div className="bg-green-300 p-2 rounded text-green-800 z-10 mt-4">
+                <h1>Consulta realizada com sucesso.</h1>
+            </div>}
         </>
     );
 }
