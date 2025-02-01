@@ -1,26 +1,37 @@
-interface HistoricoListsProps {
+import React from "react";
+
+interface DadosNutricionais {
+    calorias: number;   
+    carboidratos: number;
+    gorduras: number;
+    proteinas: number;
+}
+
+interface HistoricoLists {
+    id: number;
     data: number[];
     titulo: string;
-    dados: string;
+    dados: DadosNutricionais;
 }
 
-function ExibirData() {
-    return new Date().toLocaleDateString('pt-BR');
+interface HistoricoListsProps {
+    data: string;
+    titulo: string;
+    dados: DadosNutricionais;
 }
 
-export default function HistoricoLists({data, titulo, dados}: HistoricoListsProps) {
+export const BlocoHistorico: React.FC<HistoricoListsProps> = ({data, titulo, dados}) => {
     return (
-        <>
         <div>
             <h1>{titulo}</h1>
-            <p>{dados}</p>
-            <p>Data: {ExibirData()}</p>
-            <ul>
-                {data.map((item, index) => (
-                    <li key={index}>{item}</li>
-                ))}
-            </ul>
+            <p>{data}</p>
+            <div>
+                <p>Calorias: {dados.calorias} kcal</p>
+                <p>Proteínas: {dados.proteinas} g</p>
+                <p>Carboidratos: {dados.carboidratos}</p>
+                <p>Gorduras: {dados.gorduras} g</p>
+            </div>
         </div>
-        </>
     )
 }
+

@@ -1,13 +1,13 @@
-import ConsultarNutrientes from "../app/pages/consultar-nutrientes/page";
-import { NavBar } from "./components/NavBar";
-import { ButtomLerCodigo } from "./components/Buttomlercodigo";
+import ConsultarNutrientes from "../consultar-nutrientes/page";
+import { NavBar } from "../../components/NavBar";
+import { ButtomLerCodigo } from "../../components/Buttomlercodigo";
 import { useState } from "react";
 
 // function DadosNutrientes() {
 //   const [dados, setDados] = useState([]);
 // }
 
-export default function HomePage() {
+export default function Home() {
   return (
     <div className="flex flex-col justify-center">
     <header className="flex justify-center items-center p-4">

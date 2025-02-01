@@ -2,7 +2,7 @@
     {
         "data": "2023-10-01",
         "titulo": "Consulta 1",
-        "dados_nutricionais": {
+        "dados": {
             "calorias": 250,
             "proteinas": 10,
             "carboidratos": 35,
@@ -12,7 +12,7 @@
     {
         "data": "2023-10-02",
         "titulo": "Consulta 2",
-        "dados_nutricionais": {
+        "dados": {
             "calorias": 300,
             "proteinas": 15,
             "carboidratos": 40,

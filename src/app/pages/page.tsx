@@ -1,5 +1,5 @@
 import { BlocoHistorico } from "@/app/components/HistoricoLists"
-import historicoData from "../../consultas.json"
+import historicoData from "../consultas.json"
 
 export default function Historico() {
     return <>
