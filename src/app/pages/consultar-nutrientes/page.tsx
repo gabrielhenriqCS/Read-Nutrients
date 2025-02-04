@@ -1,11 +1,6 @@
 import ConsultarNutrientes from "../consultar-nutrientes/page";
 import { NavBar } from "../../components/NavBar";
 import { ButtomLerCodigo } from "../../components/Buttomlercodigo";
-import { useState } from "react";
-
-// function DadosNutrientes() {
-//   const [dados, setDados] = useState([]);
-// }
 
 export default function Home() {
   return (
