@@ -15,4 +15,8 @@ A aplicação está disponível em produção. Você pode acessá-la através do
 - 📊 **Exibição de informações nutricionais detalhadas**
 - 🔍 **Consulta de produtos utilizando IA**
 
+# 📄 Documentação da API
 
+Para mais detalhes sobre os endpoints disponíveis, consulte a documentação:
+
+📚 ([API Documentation](https://github.com/henriquedev24/API-ReadNutrients)))
