@@ -1,7 +1,5 @@
 # Read Nutrients
 
-![Read Nutrients Logo](https://via.placeholder.com/150)
-
 Read Nutrients é uma aplicação que permite consultar dados nutricionais de produtos a partir do código de barras, seja escaneado ou digitado manualmente.
 
 ## 🚀 Demonstração
