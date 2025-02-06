@@ -10,6 +10,7 @@ interface NutrientData {
         proteinas: number;
         carboidratos: number;
         gorduras: number;
+        fibras: number;
     };
 }
 
@@ -22,14 +23,22 @@ export default function Historico() {
         async function fetchData() {
             try {
                 const data = await getHistorico();
+                
+                console.log("Dados recebidos:", data); // Depuração
+                
+                if (!Array.isArray(data)) {
+                    throw new Error("A resposta da API não é um array.");
+                }
+    
                 setNutrientsData(data);
-            } catch {
+            } catch (err) {
+                console.error("Erro ao carregar histórico:", err);
                 setError("Erro ao carregar dados da consulta");
             } finally {
                 setLoading(false);
             }
         }
-
+    
         fetchData();
     }, []);
 
@@ -45,14 +54,15 @@ export default function Historico() {
         <div>
             <h1>Histórico de consultas</h1>
             <ul>
-                {nutrientsData.map((item, index) => (
-                    <li key={index}>
+                {nutrientsData.map((item) => (
+                    <li key={item.data}>
                         <h2>{item.titulo}</h2>
-                        <p>Data: {new Date(item.data).toLocaleString()}</p>
+                        <p>Data: {new Date(item.data).toLocaleString('pt-BR')}</p>
                         <p>Calorias: {item.dados.calorias.toFixed(2)}</p>
                         <p>Proteínas: {item.dados.proteinas.toFixed(2)}</p>
                         <p>Carboidratos: {item.dados.carboidratos.toFixed(2)}</p>
                         <p>Gorduras: {item.dados.gorduras.toFixed(2)}</p>
+                        <p>Fibras: {item.dados.fibras.toFixed(2)}</p>
                     </li>
                 ))}
             </ul>

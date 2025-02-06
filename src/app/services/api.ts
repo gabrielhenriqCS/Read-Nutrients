@@ -4,7 +4,7 @@ const API_URL = 'http://localhost:5000/consultanutrientes';
 export async function getHistorico() {
     const response = await fetch(`${API_URL}/`);
     if (!response.ok) {
-        throw new Error(`Erro ao carregar dados: ${response.statusText}`);
+        throw new Error(`Erro ao carregar dados: ${response.status} ${response.statusText}`);
     }
     const data = await response.json();
     return data;
@@ -18,7 +18,8 @@ export async function postHistorico() {
             calorias: 0,
             proteinas: 0,
             carboidratos: 0,
-            gorduras: 0
+            gorduras: 0,
+            fibras: 0
         }
     }
     const response = await fetch(`${API_URL}/fazer-consulta`, {
