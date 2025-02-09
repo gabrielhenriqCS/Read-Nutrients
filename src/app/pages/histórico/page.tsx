@@ -1,18 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { getHistorico } from "@/app/services/api";
-
-interface NutrientData {
-    data: string;
-    titulo: string;
-    dados: {
-        calorias: number;
-        proteinas: number;
-        carboidratos: number;
-        gorduras: number;
-        fibras: number;
-    };
-}
+import { NutrientData } from "@/app/interface/NutritionData";
 
 export default function Historico() {
     const [nutrientsData, setNutrientsData] = useState<NutrientData[]>([]);
@@ -29,11 +18,10 @@ export default function Historico() {
                 if (!Array.isArray(data)) {
                     throw new Error("A resposta da API não é um array.");
                 }
-    
+
                 setNutrientsData(data);
             } catch (err) {
                 console.error("Erro ao carregar histórico:", err);
-                setError("Erro ao carregar dados da consulta");
             } finally {
                 setLoading(false);
             }
@@ -55,7 +43,7 @@ export default function Historico() {
             <h1>Histórico de consultas</h1>
             <ul>
                 {nutrientsData.map((item) => (
-                    <li key={item.data}>
+                    <li key={item.data || item.id}>
                         <h2>{item.titulo}</h2>
                         <p>Data: {new Date(item.data).toLocaleString('pt-BR')}</p>
                         <p>Calorias: {item.dados.calorias.toFixed(2)}</p>

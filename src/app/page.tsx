@@ -2,9 +2,6 @@ import ConsultarNutrientes from "../app/pages/consultar-nutrientes/page";
 import { NavBar } from "./components/NavBar";
 import { ButtomLerCodigo } from "./components/Buttomlercodigo";
 
-// function DadosNutrientes() {
-//   const [dados, setDados] = useState([]);
-// }
 
 export default function HomePage() {
   return (
