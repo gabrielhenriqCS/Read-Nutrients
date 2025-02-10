@@ -10,3 +10,13 @@ export interface NutrientData {
         fibras: number;
     };
 }
+
+export interface Consults extends NutrientData {
+    date: Date;
+}
+
+export interface ApiResponse {
+    sucess: boolean,
+    message: string,
+    data: NutrientData;
+}

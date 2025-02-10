@@ -1,6 +1,6 @@
 import ConsultarNutrientes from "../app/pages/consultar-nutrientes/page";
 import { NavBar } from "./components/NavBar";
-import { ButtomLerCodigo } from "./components/Buttomlercodigo";
+import { ButtomLerCodigo } from "./components/ButtonLerCodigo";
 
 
 export default function HomePage() {
