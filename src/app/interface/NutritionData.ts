@@ -1,5 +1,5 @@
 export interface NutrientData {
-    data: string;
+    data: string | number;
     id: number;
     titulo: string;
     dados: {
@@ -11,12 +11,9 @@ export interface NutrientData {
     };
 }
 
-export interface Consults extends NutrientData {
-    date: Date;
-}
 
-export interface ApiResponse {
+export interface ApiResponse<T> {
     sucess: boolean,
     message: string,
-    data: NutrientData;
+    data: T;
 }

@@ -1,7 +1,7 @@
 
 import ConsultarNutrientes from "../consultar-nutrientes/page";
 import { NavBar } from "../../components/NavBar";
-import { ButtomLerCodigo } from "../../components/ButtonLerCodigo";
+import { ButtonLerCodigo } from "../../components/ButtonLerCodigo";
 
 export default function Home() {
   return (
@@ -12,7 +12,7 @@ export default function Home() {
     <main className="flex flex-col justify-center items-center py-0 my-52">
         <ConsultarNutrientes />
       
-      <ButtomLerCodigo />
+      <ButtonLerCodigo />
       </main>
       </div>
   )

@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getHistorico } from "@/app/services/api";
+import { deleteConsults, getHistorico } from "@/app/services/api";
 import { NutrientData } from "@/app/interface/NutritionData";
+
 
 export default function Historico() {
     const [nutrientsData, setNutrientsData] = useState<NutrientData[]>([]);
@@ -19,7 +20,17 @@ export default function Historico() {
                     throw new Error("A resposta da API não é um array.");
                 }
 
-                setNutrientsData(data);
+                const dataWithId = data.map((item) => {
+                    if (item.id) {
+                        return item;
+                    } else if (item.hasOwnProperty("id")) {
+                        return item;
+                    } else {
+                        return { ...item, id: Math.floor(Math.random() * 1000) };
+                    }
+                });
+
+                setNutrientsData(dataWithId);
             } catch (err) {
                 console.error("Erro ao carregar histórico:", err);
             } finally {
@@ -38,6 +49,14 @@ export default function Historico() {
         return <p>{error}</p>;
     }
 
+    const handleDelete = async (id: number) => {
+        const sucess = await deleteConsults(id);
+        if (sucess) {
+            setNutrientsData(nutrientsData.filter((item) => item.id !== id));
+        } else {
+            console.error("ID inválido");
+        }   
+    }
     return (
         <div>
             <h1>Histórico de consultas</h1>
@@ -51,6 +70,8 @@ export default function Historico() {
                         <p>Carboidratos: {item.dados.carboidratos.toFixed(2)}</p>
                         <p>Gorduras: {item.dados.gorduras.toFixed(2)}</p>
                         <p>Fibras: {item.dados.fibras.toFixed(2)}</p>
+                        <hr />
+                        <button onClick={handleDelete.bind(null, item.id)} >Excluir</button>
                     </li>
                 ))}
             </ul>
