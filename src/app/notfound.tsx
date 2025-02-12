@@ -5,8 +5,8 @@ export default function NotFound() {
         <>
         <h1 className="">404 Não encontrado</h1>
         <p>Pagina não encontrada</p>
-        <Link href="/">
-            <a>Voltar</a>        
+        <Link href="/notfound">
+            Voltar        
         </Link>
         </>
     )
