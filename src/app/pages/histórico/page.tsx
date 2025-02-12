@@ -7,7 +7,6 @@ import { NutrientData } from "@/app/interface/NutritionData";
 export default function Historico() {
     const [nutrientsData, setNutrientsData] = useState<NutrientData[]>([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         async function fetchData() {
@@ -43,10 +42,6 @@ export default function Historico() {
 
     if (loading) {
         return <p>Carregando...</p>;
-    }
-
-    if (error) {
-        return <p>{error}</p>;
     }
 
     const handleDelete = async (id: number) => {
