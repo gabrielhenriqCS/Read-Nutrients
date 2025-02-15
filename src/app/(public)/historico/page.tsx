@@ -6,8 +6,8 @@ import { NutrientData } from "@/app/interface/NutritionData";
 
 export default function Historico() {
     const [nutrientsData, setNutrientsData] = useState<NutrientData[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+    const [loading] = useState(true);
+    const [error] = useState<string | null>(null);
 
     useEffect(() => {
         async function updateHistoric() {
