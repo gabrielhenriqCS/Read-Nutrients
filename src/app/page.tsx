@@ -1,6 +1,6 @@
 
-import { NavBar } from "./components/NavBar";
-import { ButtonLerCodigo } from "./components/ButtonLerCodigo";
+import { NavBar } from "@/app/components/NavBar";
+import { ButtonLerCodigo } from "@/app/components/ButtonLerCodigo";
 
 
 export default function HomePage() {

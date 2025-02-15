@@ -1,100 +1,76 @@
-import { NutrientData } from "../interface/NutritionData";
+import { NutrientData } from "@/app/interface/NutritionData";
 
-const API_URL = 'http://localhost:5000/home';
+const API_URL = 'http://localhost:5000';
 
 interface ApiResponse<T> { 
-    sucess: boolean;
+    success: true;
     message: string;
     data: T;
 }
 
 export async function getHistorico(): Promise<NutrientData[]> {
     try {
-        const response = await fetch(`${API_URL}/nutriconsults/historic/`);
+        const response = await fetch(`${API_URL}/home/nutritionconsults/historic/`);
         if (!response.ok) {
-            const errorData = await response.json(); 
-            const errorMessage = errorData.message || response.statusText;
-            throw new Error(`Erro carregando dados: ${response.status} - ${errorMessage}`);
+            throw new Error(`Erro carregando dados: ${response.status}`);
         }
 
-        const data: ApiResponse<NutrientData[]> = await response.json(); // Tipagem mais precisa
+        const data: ApiResponse<NutrientData> = await response.json(); 
 
-        if (!Array.isArray(data.data)) { 
+        if (!data || !Array.isArray(data.data)) { 
             throw new Error("API response não é um array.");
         }
 
-        const cleanData = data.data.map(({ data: jsonData, id, titulo }) => {
-            const dataString = typeof jsonData === 'string' ? jsonData : JSON.stringify(jsonData);
+        const cleanData = data.data.map((item) => {
+            const dataString = typeof item.data === "string" ? JSON.parse(item.data) : item.data;
             return {
-              data: jsonData,
-              id,
-              titulo,
-              dados: { ...JSON.parse(dataString) },
+              data: item.data,
+              id: item.id,
+              titulo: item.titulo,
+              dados: dataString,
             };
           });
 
         return cleanData;
-    } catch (error: unknown) { 
-        console.error("Carregamento do histórico falhou:", error);
-        if (error instanceof Error) {
-            throw new Error(`Carregamento do histórico falhou: ${error.message}`); 
+    } catch (parseError: unknown) { 
+        console.error("Carregamento do histórico falhou:", parseError);
+        if (parseError instanceof Error) {
+            throw new Error(`Carregamento do histórico falhou: ${parseError.message}`); 
         } else {
             throw new Error("Carregamento do histórico falhou. Tente novamente.");
         }
     }
 }
 
-export async function postBarCode(barcode: string): Promise<NutrientData> {
+async function apiRequest<T>(url: string, options?: RequestInit): Promise<T> {
     try {
-        const response = await fetch(`${API_URL}/nutriconsults/`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ code: barcode }),
-        });
+        const response = await fetch(url, options);
 
         if (!response.ok) {
-            const errorData = await response.json(); 
-            const errorMessage = errorData.message || response.statusText;
-            throw new Error(`Erro na requisição: ${response.status} - ${errorMessage}`);
+            const errorData = await response.json();
+            throw new Error(errorData.message || `Erro ${response.status}`);
         }
 
-        const res_data: ApiResponse<NutrientData> = await response.json(); // Tipagem mais precisa
-
-        // Verifica tipos e se res_data.data existe
-        if (typeof res_data.sucess !== 'boolean' || typeof res_data.message !== 'string' || !res_data.data) {
-            throw new Error("Estrutura de dados inválida recebida pela API.");
-        }
-
-        return res_data.data;
-    } catch (error: unknown) {
-        console.error("Carregamento de dados do código de barras falhou:", error);
-        if (error instanceof Error) {
-            throw new Error(`Carregamento de dados do código de barras falhou: ${error.message}`);
-        } else {
-            throw new Error("Carregamento de dados do código de barras falhou. Tente novamente.");
-        }
+        return response.json();
+    } catch (error) {
+        console.error(`Erro na requisição para ${url}:`, error);
+        throw new Error("Erro na comunicação com o servidor.");
     }
+} 
+
+export async function postBarCode(code: string): Promise<NutrientData> {
+    return apiRequest<NutrientData>(`${API_URL}/home/nutritionconsults/`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ code }),
+    });
 }
 
 
 export async function deleteConsults(id: number): Promise<boolean> {
-    try {
-        const delete_history = await fetch(`${API_URL}/consults/${id}`, {
-            method: "DELETE",
-        });
-
-        if (!delete_history.ok) {
-            const errorData = await delete_history.json(); // Tenta obter detalhes do erro em JSON
-            const errorMessage = errorData.message || delete_history.statusText;
-            throw new Error(`Erro ao deletar consultas: ${delete_history.status} - ${errorMessage}`);
-        }
-
-        console.log("Consultas deletadas com sucesso."); // Mensagem mais clara
-        return true;
-    } catch (error: unknown) { // Tipo unknown para erros
-        console.error("Erro ao deletar consultas:", error);
-        return false;
-    }
+    return apiRequest<boolean>(`${API_URL}/home/nutritionconsults/${id}`, {
+        method: "DELETE",
+    });
 }
