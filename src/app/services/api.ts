@@ -1,76 +1,38 @@
-import { NutrientData } from "@/app/interface/NutritionData";
+import axios, { AxiosResponse } from 'axios';
+import { NutrientData } from '../interface/NutritionData';
 
-const API_URL = 'http://localhost:5000';
+export const api = axios.create({
+  baseURL: process.env.BACKEND_URL,
+});
 
-interface ApiResponse<T> { 
-    success: true;
-    message: string;
-    data: T;
-}
-
-export async function getHistorico(): Promise<NutrientData[]> {
+export class NutritionConsults {
+  // Método para buscar o histórico de consultas
+  static async MostrarHistorico(): Promise<AxiosResponse<NutrientData[]>> {
     try {
-        const response = await fetch(`${API_URL}/home/nutritionconsults/historic/`);
-        if (!response.ok) {
-            throw new Error(`Erro carregando dados: ${response.status}`);
-        }
-
-        const data: ApiResponse<NutrientData> = await response.json(); 
-
-        if (!data || !Array.isArray(data.data)) { 
-            throw new Error("API response não é um array.");
-        }
-
-        const cleanData = data.data.map((item) => {
-            const dataString = typeof item.data === "string" ? JSON.parse(item.data) : item.data;
-            return {
-              data: item.data,
-              id: item.id,
-              titulo: item.titulo,
-              dados: dataString,
-            };
-          });
-
-        return cleanData;
-    } catch (parseError: unknown) { 
-        console.error("Carregamento do histórico falhou:", parseError);
-        if (parseError instanceof Error) {
-            throw new Error(`Carregamento do histórico falhou: ${parseError.message}`); 
-        } else {
-            throw new Error("Carregamento do histórico falhou. Tente novamente.");
-        }
+      const response = await api.get('/nutritionconsults/historic');
+      return response;
+    } catch {
+      throw new Error('Erro ao buscar histórico de consultas.');
     }
-}
+  }
 
-async function apiRequest<T>(url: string, options?: RequestInit): Promise<T> {
+  // Método para criar uma nova consulta
+  static async CriarConsulta(barcode: string): Promise<AxiosResponse<NutrientData>> {
     try {
-        const response = await fetch(url, options);
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || `Erro ${response.status}`);
-        }
-
-        return response.json();
-    } catch (error) {
-        console.error(`Erro na requisição para ${url}:`, error);
-        throw new Error("Erro na comunicação com o servidor.");
+      const response = await api.post("/nutritionconsults", { barcode });
+      return response;
+    } catch {
+      throw new Error('Erro ao criar consulta. Verifique o código de barras.');
     }
-} 
+  }
 
-export async function postBarCode(code: string): Promise<NutrientData> {
-    return apiRequest<NutrientData>(`${API_URL}/home/nutritionconsults/`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ code }),
-    });
-}
-
-
-export async function deleteConsults(id: number): Promise<boolean> {
-    return apiRequest<boolean>(`${API_URL}/home/nutritionconsults/${id}`, {
-        method: "DELETE",
-    });
+  // Método para deletar uma consulta
+  static async DeletarConsulta(id: number): Promise<AxiosResponse<void>> {
+    try {
+      const response = await api.delete(`/nutritionconsults/${id}`);
+      return response;
+    } catch {
+      throw new Error('Erro ao deletar consulta.');
+    }
+  }
 }

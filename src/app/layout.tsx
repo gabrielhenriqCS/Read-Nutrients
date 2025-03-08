@@ -4,7 +4,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Leitura de Nutrientes",
-  description: "Created by Gabriel Henrique",
+  description: "site para fazer leitura de dados nutricionais",
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

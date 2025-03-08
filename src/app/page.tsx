@@ -5,7 +5,7 @@ import { ButtonLerCodigo } from "@/app/components/ButtonLerCodigo";
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col justify-center">
+    <div className="flex flex-col justify-center items-center">
     <header className="flex justify-center items-center p-4">
       <NavBar />
     </header>

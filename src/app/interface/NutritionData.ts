@@ -1,7 +1,7 @@
 export interface NutrientData {
-    data: string | number;
     id: number;
     titulo: string;
+    barcode: string;
     dados: {
         calorias: number;
         proteinas: number;
@@ -9,6 +9,7 @@ export interface NutrientData {
         gorduras: number;
         fibras: number;
     };
+    data?: string;
 }
 
 
