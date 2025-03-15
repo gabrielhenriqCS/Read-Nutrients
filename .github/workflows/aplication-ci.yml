@@ -27,8 +27,7 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deploy # Adapte para o seu ambiente de hospedagem
-        # Exemplo com Vercel (substitua com seu provedor)
-        uses: vercel/vercel-action@v1
+      - name: Deploy 
+        uses: vercel/vercel-action@latest
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
